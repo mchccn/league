@@ -1,0 +1,33 @@
+{
+    "name": "@kelsny/puzzle",
+    "description": "Sliding puzzle solver thing but really shitty.",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "watch": "tsc -w",
+        "build": "webpack",
+        "dev": "webpack --watch"
+    },
+    "devDependencies": {
+        "ts-loader": "^9.3.0",
+        "typescript": "^4.6.4",
+        "webpack": "^5.72.0",
+        "webpack-cli": "^4.9.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kelsny/puzzle.git"
+    },
+    "keywords": [],
+    "author": "kelsny <cursors.owo.uwu@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/kelsny/puzzle/issues"
+    },
+    "homepage": "https://github.com/kelsny/puzzle#readme",
+    "main": "webpack.config.js",
+    "dependencies": {
+        "@types/matter-js": "^0.17.7",
+        "matter-js": "^0.18.0"
+    }
+}
