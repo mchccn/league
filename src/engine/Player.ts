@@ -71,10 +71,11 @@ export class Player {
 
                 Body.translate(this.character.body, Vector.neg(Vector.magnitude(m) > Vector.magnitude(d) ? d : m));
 
-                // body slides for some reason???
-
                 if (Vector.magnitude(Vector.sub(this.character.body.position, this.destinations[0])) < 0.5)
-                    this.character.body.position = Vector.clone(this.destinations.shift()!);
+                    Body.translate(
+                        this.character.body,
+                        Vector.sub(this.character.body.position, this.destinations.shift()!)
+                    );
             }
         });
     }
