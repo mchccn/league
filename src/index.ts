@@ -29,7 +29,7 @@ engine.render = render;
 
 const keybinds = useKeybinds(new Keybinds());
 
-const character = new Character(Bodies.circle(0, 0, 25, { restitution: 0 }), {
+const character = new Character(Bodies.circle(100, 100, 25, { restitution: 0 }), {
     baseAbilityHaste: 0,
     baseAbilityPower: 0,
     baseArmor: 0,

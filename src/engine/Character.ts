@@ -40,7 +40,7 @@ export class Character extends Entity {
             baseAbilityHaste: number;
             baseAttackSpeed: number;
             baseMoveSpeed: number;
-        },
+        }
     ) {
         super();
 

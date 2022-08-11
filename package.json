@@ -1,6 +1,6 @@
 {
-    "name": "@kelsny/puzzle",
-    "description": "Sliding puzzle solver thing but really shitty.",
+    "name": "@kelsny/league",
+    "description": "League of Legends if it was made by a high schooler.",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -16,18 +16,20 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/kelsny/puzzle.git"
+        "url": "git+https://github.com/kelsny/league.git"
     },
     "keywords": [],
     "author": "kelsny <cursors.owo.uwu@gmail.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/kelsny/puzzle/issues"
+        "url": "https://github.com/kelsny/league/issues"
     },
-    "homepage": "https://github.com/kelsny/puzzle#readme",
+    "homepage": "https://github.com/kelsny/league#readme",
     "main": "webpack.config.js",
     "dependencies": {
+        "@types/lodash.debounce": "^4.0.7",
         "@types/matter-js": "^0.17.7",
+        "lodash.debounce": "^4.0.8",
         "matter-js": "^0.18.0"
     }
 }
