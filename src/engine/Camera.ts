@@ -1,4 +1,4 @@
-import { Events } from "matter-js";
+import { Events, Render, Vector } from "matter-js";
 import { getEngine } from "../help/engines";
 import { getKeybinds } from "../help/keybinds";
 import { Player } from "./Player";
@@ -17,6 +17,8 @@ export class Camera {
         bottom: false,
         left: false,
     };
+
+    #zoom = 1;
 
     constructor(player: Player) {
         this.player = player;
@@ -72,6 +74,37 @@ export class Camera {
                     this.#engine.render.bounds.max.y += 10;
                 }
             }
+        });
+
+        document.addEventListener("wheel", (e) => {
+            this.#zoom = Math.max(Math.min(this.#zoom + (e.deltaY > 0 ? -0.025 : 0.025), 1), 0.333);
+
+            const singularity = Vector.create(
+                this.#engine.render.bounds.min.x +
+                    (this.#engine.render.bounds.max.x - this.#engine.render.bounds.min.x) / 2,
+                this.#engine.render.bounds.min.y +
+                    (this.#engine.render.bounds.max.y - this.#engine.render.bounds.min.y) / 2
+            );
+
+            const full = Vector.div(
+                Vector.create(this.#engine.render.canvas.width, this.#engine.render.canvas.height),
+                this.#engine.render.options.pixelRatio ?? window.devicePixelRatio
+            );
+
+            Render.lookAt(
+                this.#engine.render,
+                {
+                    bounds: {
+                        min: singularity,
+                        max: singularity,
+                    },
+                    position: singularity,
+                },
+                {
+                    x: this.#zoom * (full.x / 2),
+                    y: this.#zoom * (full.y / 2),
+                }
+            );
         });
 
         this.#keybinds
