@@ -3,6 +3,7 @@ import { Settings } from "../managers/Settings";
 export type SettingsData = {
     cameraMoveSpeed: number;
     cameraZoomSpeed: number;
+    cameraMoveTriggerSize: number;
 };
 
 let settings!: Settings<SettingsData>;

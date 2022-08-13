@@ -35,6 +35,9 @@ const settings = useSettings(
     new Settings("kelsny.league.settings", {
         cameraMoveSpeed: 10,
         cameraZoomSpeed: 0.025,
+        cameraMoveTriggerSize: 10,
+    }).whenSet("cameraMoveTriggerSize", (size) => {
+        document.body.style.setProperty("--camera-move-trigger-size", size + "px");
     })
 );
 

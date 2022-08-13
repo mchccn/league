@@ -3,6 +3,8 @@ export class Settings<T extends Record<string, string | number | boolean>> {
 
     #settings: T;
 
+    #whenSetHooks = new Map<keyof T, ((value: any) => void)[]>();
+
     constructor(key: string, defaults: T) {
         this.#key = key;
 
@@ -43,9 +45,19 @@ export class Settings<T extends Record<string, string | number | boolean>> {
         try {
             this.#settings[key] = value;
 
+            this.#whenSetHooks.get(key)?.forEach((run) => {
+                run.call(undefined, value);
+            });
+
             return value;
         } finally {
             this.write();
         }
+    }
+
+    whenSet<K extends keyof T>(key: K, run: (value: T[K]) => void) {
+        this.#whenSetHooks.set(key, (this.#whenSetHooks.get(key) ?? []).concat(run));
+
+        return this;
     }
 }
