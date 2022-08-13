@@ -4,7 +4,9 @@ import { Character } from "./engine/Character";
 import { Player } from "./engine/Player";
 import { useEngine } from "./help/engines";
 import { useKeybinds } from "./help/keybinds";
+import { useSettings } from "./help/settings";
 import { Keybinds } from "./managers/Keybinds";
+import { Settings } from "./managers/Settings";
 
 const querySelector = document.querySelector.bind(document);
 
@@ -28,6 +30,13 @@ engine.gravity = { scale: 0, x: 0, y: 0 };
 engine.render = render;
 
 const keybinds = useKeybinds(new Keybinds());
+
+const settings = useSettings(
+    new Settings("kelsny.league.settings", {
+        cameraMoveSpeed: 10,
+        cameraZoomSpeed: 0.025,
+    })
+);
 
 const character = new Character(Bodies.circle(100, 100, 25, { restitution: 0 }), {
     baseAbilityHaste: 0,

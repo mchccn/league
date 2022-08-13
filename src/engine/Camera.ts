@@ -1,6 +1,7 @@
 import { Events, Render, Vector } from "matter-js";
 import { getEngine } from "../help/engines";
 import { getKeybinds } from "../help/keybinds";
+import { getSettings } from "../help/settings";
 import { Player } from "./Player";
 
 export class Camera {
@@ -8,6 +9,7 @@ export class Camera {
 
     #engine = getEngine();
     #keybinds = getKeybinds();
+    #settings = getSettings();
 
     #locked = false;
 
@@ -55,29 +57,36 @@ export class Camera {
                 this.#engine.render.bounds.max.y = this.#engine.render.bounds.min.y + height;
             } else {
                 if (this.#moving.left || this.#keybinds.isKeyDown("ArrowLeft")) {
-                    this.#engine.render.bounds.min.x -= 10;
-                    this.#engine.render.bounds.max.x -= 10;
+                    this.#engine.render.bounds.min.x -= this.#settings.get("cameraMoveSpeed");
+                    this.#engine.render.bounds.max.x -= this.#settings.get("cameraMoveSpeed");
                 }
 
                 if (this.#moving.right || this.#keybinds.isKeyDown("ArrowRight")) {
-                    this.#engine.render.bounds.min.x += 10;
-                    this.#engine.render.bounds.max.x += 10;
+                    this.#engine.render.bounds.min.x += this.#settings.get("cameraMoveSpeed");
+                    this.#engine.render.bounds.max.x += this.#settings.get("cameraMoveSpeed");
                 }
 
                 if (this.#moving.top || this.#keybinds.isKeyDown("ArrowUp")) {
-                    this.#engine.render.bounds.min.y -= 10;
-                    this.#engine.render.bounds.max.y -= 10;
+                    this.#engine.render.bounds.min.y -= this.#settings.get("cameraMoveSpeed");
+                    this.#engine.render.bounds.max.y -= this.#settings.get("cameraMoveSpeed");
                 }
 
                 if (this.#moving.bottom || this.#keybinds.isKeyDown("ArrowDown")) {
-                    this.#engine.render.bounds.min.y += 10;
-                    this.#engine.render.bounds.max.y += 10;
+                    this.#engine.render.bounds.min.y += this.#settings.get("cameraMoveSpeed");
+                    this.#engine.render.bounds.max.y += this.#settings.get("cameraMoveSpeed");
                 }
             }
         });
 
         document.addEventListener("wheel", (e) => {
-            this.#zoom = Math.max(Math.min(this.#zoom + (e.deltaY > 0 ? -0.025 : 0.025), 1), 0.333);
+            this.#zoom = Math.max(
+                Math.min(
+                    this.#zoom +
+                        (e.deltaY > 0 ? -this.#settings.get("cameraZoomSpeed") : this.#settings.get("cameraZoomSpeed")),
+                    1
+                ),
+                0.333
+            );
 
             const singularity = Vector.create(
                 this.#engine.render.bounds.min.x +
@@ -86,7 +95,7 @@ export class Camera {
                     (this.#engine.render.bounds.max.y - this.#engine.render.bounds.min.y) / 2
             );
 
-            const full = Vector.div(
+            const original = Vector.div(
                 Vector.create(this.#engine.render.canvas.width, this.#engine.render.canvas.height),
                 this.#engine.render.options.pixelRatio ?? window.devicePixelRatio
             );
@@ -94,16 +103,10 @@ export class Camera {
             Render.lookAt(
                 this.#engine.render,
                 {
-                    bounds: {
-                        min: singularity,
-                        max: singularity,
-                    },
+                    bounds: { min: singularity, max: singularity },
                     position: singularity,
                 },
-                {
-                    x: this.#zoom * (full.x / 2),
-                    y: this.#zoom * (full.y / 2),
-                }
+                Vector.mult(Vector.div(original, 2), this.#zoom)
             );
         });
 
