@@ -1,7 +1,4 @@
 import { Keybinds } from "../managers/Keybinds";
+import { getnset } from "./getnset";
 
-let keybinds!: Keybinds;
-
-export const getKeybinds = () => keybinds;
-
-export const useKeybinds = (k: Keybinds) => (keybinds = k);
+export const [getKeybinds, setKeybinds] = getnset<Keybinds>();

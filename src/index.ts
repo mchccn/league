@@ -2,17 +2,16 @@ import { Bodies, Composite, Engine, Render, Runner } from "matter-js";
 import { Camera } from "./engine/Camera";
 import { Character } from "./engine/Character";
 import { Player } from "./engine/Player";
-import { useEngine } from "./help/engines";
-import { useKeybinds } from "./help/keybinds";
-import { useSettings } from "./help/settings";
+import { setEngine } from "./help/engines";
+import { setKeybinds } from "./help/keybinds";
+import { setSettings } from "./help/settings";
 import { Keybinds } from "./managers/Keybinds";
 import { Settings } from "./managers/Settings";
+import { SettingsMenu } from "./menus/settings";
 
-const querySelector = document.querySelector.bind(document);
+const canvas = document.querySelector("canvas")!;
 
-const canvas = querySelector("canvas")!;
-
-const engine = useEngine(Engine.create());
+const engine = setEngine(Engine.create());
 
 const render = Render.create({
     canvas,
@@ -29,9 +28,11 @@ engine.gravity = { scale: 0, x: 0, y: 0 };
 
 engine.render = render;
 
-const keybinds = useKeybinds(new Keybinds());
+new SettingsMenu("settingsicon", "settingsmenu", "inactivemenu");
 
-const settings = useSettings(
+setKeybinds(new Keybinds());
+
+setSettings(
     new Settings("kelsny.league.settings", {
         cameraMoveSpeed: 10,
         cameraZoomSpeed: 0.025,

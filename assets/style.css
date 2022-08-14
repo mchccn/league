@@ -119,3 +119,35 @@ canvas {
     width: var(--camera-move-trigger-size);
     height: var(--camera-move-trigger-size);
 }
+
+#settingsicon {
+    position: fixed;
+
+    top: 0.5rem;
+    right: 0.5rem;
+
+    z-index: 10;
+
+    width: 2rem;
+    height: 2rem;
+
+    cursor: pointer;
+}
+
+#settingsmenu {
+    position: fixed;
+
+    top: calc(50% - 500px / 2);
+    left: calc(50% - 375px / 2);
+
+    z-index: 10;
+
+    width: 375px;
+    height: 500px;
+
+    background-color: #050515;
+}
+
+.inactivemenu {
+    visibility: hidden;
+}

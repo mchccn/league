@@ -1,7 +1,4 @@
 import { Engine } from "matter-js";
+import { getnset } from "./getnset";
 
-let engine!: Engine;
-
-export const getEngine = () => engine;
-
-export const useEngine = (e: Engine) => (engine = e);
+export const [getEngine, setEngine] = getnset<Engine>();

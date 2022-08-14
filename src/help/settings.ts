@@ -1,4 +1,5 @@
 import { Settings } from "../managers/Settings";
+import { getnset } from "./getnset";
 
 export type SettingsData = {
     cameraMoveSpeed: number;
@@ -6,8 +7,4 @@ export type SettingsData = {
     cameraMoveTriggerSize: number;
 };
 
-let settings!: Settings<SettingsData>;
-
-export const getSettings = () => settings;
-
-export const useSettings = (s: Settings<SettingsData>) => (settings = s);
+export const [getSettings, setSettings] = getnset<Settings<SettingsData>>();
